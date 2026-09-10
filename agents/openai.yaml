@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design for Review"
+  short_description: "Explain software changes and rationale before code details"
+  default_prompt: "Use $design-for-review to write a concise software design that explains what will change and why, with implementation details in a separate appendix."

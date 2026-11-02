@@ -2,20 +2,24 @@
 
 [中文说明](README.zh-CN.md)
 
-A lightweight agent skill for software designs you can review without reading the
-implementation details. Understand **what changes, why it matters, and what the
-tradeoffs are** before looking at files, classes, or APIs.
+A lightweight agent skill that reduces the effort of reviewing software designs.
+Focus on **why the proposed mechanism addresses the problem and what it costs**.
+Use familiar technical terms directly; add the reasoning needed to judge the
+recommendation.
 
-Instead of “add a retry manager,” get “retry temporary interruptions within the
-same export request, with a bounded wait and protection against duplicate reports.”
-See the [complete example](examples/reviewable-design.md).
+For example: “Transient service failures currently end the export immediately,
+so add bounded exponential backoff to the worker. This can avoid manual restarts,
+but delays final failure and increases service load.”
+See the [example](examples/reviewable-design.md).
 
 ## What it does
 
-- Separates intent and decisions, observable behavior, and implementation.
-- Keeps important rationale, compatibility effects, and risks in the main body.
-- Places code details in an optional appendix with a decision-to-implementation map.
-- Scales to the change instead of requiring a long template.
+- Connects the cause or constraint to a recommended mechanism and its side effects.
+- Keeps familiar technical shorthand and adds missing reasons and tradeoffs.
+- Highlights what needs your judgment and handles routine choices within scope.
+- Keeps important risks and assumptions visible.
+- Includes technical detail where it helps you judge the design; defers the rest.
+- Adapts length and structure without required sections, appendices, or tables.
 - Respects design-only requests and existing authorization to implement.
 
 Use it to draft a proposal before coding or rewrite a design that mixes rationale
@@ -51,19 +55,19 @@ are required by this skill.
 
 ```text
 Use $design-for-review to design automatic retries for failed report exports.
-Explain the behavior and tradeoffs first. Do not implement yet.
+Explain why the mechanism fits the problem and what side effects it introduces.
+Do not implement yet.
 ```
 
 ```text
-Use $design-for-review to rewrite this proposal so I can review its decisions
-without reading the implementation appendix. Preserve the existing requirements
-and flag missing rationale.
+Use $design-for-review to rewrite this proposal so its key decisions are easy to
+judge. Preserve the agreed requirements and decisions, and flag missing rationale.
 ```
 
-The skill follows your language and requested depth. Ask for a conceptual design
-only to omit implementation details, or request a file such as `DESIGN.md` to save
-the result. When you explicitly authorize both design and implementation, the
-skill does not insert an additional approval step.
+Implementation details can be expanded when useful; an appendix is optional.
+You can request a file such as `DESIGN.md` to save the result. When you explicitly
+authorize both design and implementation, the skill does not insert an additional
+approval step.
 
 ## Contributing
 
@@ -72,9 +76,8 @@ result made review harder: missing rationale, hidden behavior, unnecessary scope
 or implementation details needed to understand a decision. Remove private project
 information. Prefer focused changes over adding mandatory sections for every case.
 
-Before submitting, check the YAML frontmatter and local links, then try a realistic
-design request. Judge whether the main body stands on its own with the appendix
-hidden; formatting checks alone cannot establish design quality.
+Check the YAML frontmatter and local links. Iterate from daily use: notice what
+still requires follow-up questions or unnecessary reading to judge the proposal.
 
 ## License
 
